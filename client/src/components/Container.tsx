@@ -8,7 +8,7 @@ function Container() {
     const [isDisabled, setIsDisabled] = useState(false);
     const BASE_URL = 'http://localhost:4000';
 
-    const callAPI = async () => {
+    const callAPI = async (updatedMessages: { role: string; content: string }[]) => {
         try {
             const response = await fetch(BASE_URL + '/chat', {
                 method: 'POST',
@@ -16,7 +16,7 @@ function Container() {
                     "content-type": "application/json"
                 },
                 body: JSON.stringify({
-                    messages: messages,
+                    messages: updatedMessages,
                 }),
             })
             if(response.ok){
@@ -42,10 +42,11 @@ function Container() {
         setIsDisabled(true);
 
         const userMsg = { role: "user", content: inputValue };
-        setMessages((prev) => [...prev, userMsg]);
+        const updatedMessages = [...messages, userMsg];
+        setMessages(updatedMessages);
 
         setInputValue('');
-        await callAPI();
+        await callAPI(updatedMessages);
     }
 
     const renderMessages = () => {

@@ -1,6 +1,6 @@
 
 function MessageRow(props: { role: string; content: string; index: number }) {
-  const { role, content, index } = props;
+  const { role, content} = props;
   return (
     <>
       <div className={`message-row user ${role === 'user' ? 'user' : 'assistant'} `}>
